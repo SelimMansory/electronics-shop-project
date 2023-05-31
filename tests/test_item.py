@@ -16,6 +16,7 @@ def test_init():
     assert item.calculate_total_price() == 10000.0
 
     Item.instantiate_from_csv()
-    assert len(Item.all) == 6
+    assert len(Item.all) == 5
     assert Item.string_to_number('5') == 5
     assert Item.string_to_number('5.5') == 5
+

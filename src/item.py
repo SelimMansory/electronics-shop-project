@@ -42,13 +42,11 @@ class Item:
 
     @property
 
-
     def name(self):
         return self.__name
 
 
     @name.setter
-
 
     def name(self, new_name: str) -> None:
         if len(new_name) < 11:
@@ -57,18 +55,16 @@ class Item:
             print("Exception: Длина наименования"+\
     " товара превышает 10 символов.")
 
-
     @classmethod
     def instantiate_from_csv(cls):
-        with open(path.join('..', 'src', 'items.csv'),\
-        'r', encoding = 'cp1251') as csvfile:
+        cls.all.clear()
+        with open(path.join('..', 'src', 'items.csv'), 'r', encoding='cp1251') as csvfile:
             read = DictReader(csvfile)
             for i in read:
                 cls(i['name'], i['price'], i['quantity'])
 
 
     @staticmethod
-
 
     def string_to_number(string_number: str) -> int:
         number = int(float(string_number))
