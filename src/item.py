@@ -9,7 +9,6 @@ class Item:
     pay_rate = 1.0
     all = []
 
-
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
@@ -23,6 +22,11 @@ class Item:
         self.quantity = quantity
         Item.all.append(self)
 
+    def __str__(self):
+        return self.__name
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {str(self.price)}, {str(self.quantity)})"
 
     def calculate_total_price(self) -> float:
         """
@@ -32,28 +36,23 @@ class Item:
         """
         return self.price * self.quantity
 
-
     def apply_discount(self) -> None:
         """
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
 
-
     @property
-
     def name(self):
         return self.__name
 
-
     @name.setter
-
     def name(self, new_name: str) -> None:
         if len(new_name) < 11:
             self.__name = new_name
         else:
-            print("Exception: Длина наименования"+\
-    " товара превышает 10 символов.")
+            print("Exception: Длина наименования" + \
+                  " товара превышает 10 символов.")
 
     @classmethod
     def instantiate_from_csv(cls):
@@ -63,9 +62,7 @@ class Item:
             for i in read:
                 cls(i['name'], i['price'], i['quantity'])
 
-
     @staticmethod
-
     def string_to_number(string_number: str) -> int:
         number = int(float(string_number))
         return number

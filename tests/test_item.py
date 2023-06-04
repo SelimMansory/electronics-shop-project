@@ -3,20 +3,29 @@ import pytest
 from src.item import Item
 
 
-def test_init():
-    item = Item('test', 200.0, 100)
-    Item.pay_rate = 0.5
-    item.name = "test2"
-    with pytest.raises(Exception):
-        item.name = "1234567890l"
-    assert item.name == 'test2'
-    assert item.price == 200.0
-    assert item.quantity == 100
-    item.apply_discount()
-    assert item.calculate_total_price() == 10000.0
+@pytest.fixture
+def start_data():
+    return Item("Пижама", 999.9, 10)
 
+
+def test_Item(start_data):
+    assert start_data.name == 'Пижама'
+    start_data.name = 'Шкаф'
+    assert start_data.name == 'Шкаф'
+    start_data.name = 'СлишкомДлинноеСлово'
+    assert start_data.name == 'Шкаф'
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
-    assert Item.string_to_number('5') == 5
-    assert Item.string_to_number('5.5') == 5
+    assert start_data.string_to_number('50.1') == 50
+    start_data.instantiate_from_csv()
+    assert start_data.all[1].price == '100'
+    assert repr(start_data) == "Item('Шкаф', 999.9, 10)"
+    assert str(start_data) == 'Шкаф'
 
+def test_calculate_total_price(start_data):
+    assert start_data.calculate_total_price() == 999.9*10
+
+
+def test_apply_discount(start_data):
+    start_data.apply_discount()
+    assert start_data.price == 999.9
