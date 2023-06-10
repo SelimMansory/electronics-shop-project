@@ -21,6 +21,8 @@ def test_Item(start_data):
     assert start_data.all[1].price == '100'
     assert repr(start_data) == "Item('Шкаф', 999.9, 10)"
     assert str(start_data) == 'Шкаф'
+    assert start_data + start_data == 20
+    assert start_data + 573745 == None
 
 def test_calculate_total_price(start_data):
     assert start_data.calculate_total_price() == 999.9*10
